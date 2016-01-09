@@ -1,0 +1,35 @@
+<?php 
+
+class Membership_model extends CI_Model {
+    
+    
+    function validate() {
+        
+        $this->db->where('username',$this->input->post('username'));
+        $this->db->where('password',($this->input->post('password')));
+       $q =  $this->db->get('membership');
+        
+        if($q->num_rows() == 1){
+            
+            return true;
+        }
+        
+    }
+    
+    function create_member(){
+        
+        $new_member_insert_data = array(
+            'first_name' => $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+            'email_address' => $this->input->post('email_address'),
+            'username' => $this->input->post('username'),
+            'password' => $this->input->post('password')
+        
+        );
+        $this->db->set($new_member_insert_data);
+        $insert = $this->db->insert('membership',$new_member_insert_data);
+        return $insert;
+    }
+}
+
+?>
